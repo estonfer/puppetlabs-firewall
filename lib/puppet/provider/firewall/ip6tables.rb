@@ -109,6 +109,8 @@ Puppet::Type.type(:firewall).provide :ip6tables, :parent => :iptables, :source =
     :rseconds           => "--seconds",
     :rsource            => "--rsource",
     :rttl               => "--rttl",
+    :set_dscp           => '--set-dscp',
+    :set_dscp_class     => '--set-dscp-class',
     :set_mark           => mark_flag,
     :set_mss            => '--set-mss',
     :socket             => "-m socket",

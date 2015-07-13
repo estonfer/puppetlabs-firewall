@@ -873,6 +873,18 @@ Puppet::Type.newtype(:firewall) do
     newvalues(:true, :false)
   end
 
+  newproperty(:set_dscp, :required_features => :iptables) do
+    desc <<-EOS
+      Set DSCP Markings.
+    EOS
+  end
+  
+  newproperty(:set_dscp_class, :required_features => :iptables) do
+    desc <<-EOS
+      This sets the DSCP field according to a predefined DiffServ class.
+    EOS
+  end
+
   newproperty(:set_mss, :required_features => :iptables) do
     desc <<-EOS
       Sets the TCP MSS value for packets.
@@ -1411,6 +1423,12 @@ Puppet::Type.newtype(:firewall) do
         self.fail "[%s] Parameter dport only applies to sctp, tcp and udp " \
           "protocols. Current protocol is [%s] and dport is [%s]" %
           [value(:name), should(:proto), should(:dport)]
+      end
+    end
+
+    if value(:jump).to_s == "DSCP"
+      unless value(:set_dscp) ^ value(:set_dscp_class)
+        self.fail "When using jump => DSCP, the set_dscp or set_dscp_class property is required"
       end
     end
 
