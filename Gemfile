@@ -45,4 +45,8 @@ else
   gem 'puppet', :require => false
 end
 
+group :test do
+  gem "debugger"
+end
+
 # vim:ft=ruby
